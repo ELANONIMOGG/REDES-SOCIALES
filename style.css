@@ -16,6 +16,7 @@ body
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
     overflow: hidden;
+    will-change: background-position;
 }
 
 body::before {
@@ -47,6 +48,7 @@ ul
     transform: skewY(-15deg);
     z-index: 1;
     filter: drop-shadow(0 25px 50px rgba(0,0,0,0.5));
+    will-change: transform;
 }
 ul li
 {
@@ -55,19 +57,22 @@ ul li
     width: 140px;
     background: linear-gradient(145deg, #4a4b52, #2a2b32);
     padding: 18px;
-    transition: 0.5s;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                background 0.3s ease,
+                box-shadow 0.3s ease;
     z-index: calc(1 * var(--i));
     border-left: 3px solid rgba(255,255,255,0.1);
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    will-change: transform, background, box-shadow;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 ul li:hover
 { 
     transform: translateX(-60px) scale(1.05);
     background: var(--clr);
     box-shadow: 0 20px 40px rgba(0,0,0,0.5), 
-                0 0 30px var(--clr),
-                inset 0 0 20px rgba(255,255,255,0.2);
-    filter: brightness(1.2);
+                0 0 30px var(--clr);
 }
 ul li::before
 {
@@ -78,17 +83,18 @@ ul li::before
     width: 40px;
     height: 100%;
     background: linear-gradient(145deg, #3a3b42, #1a1b22);
-    filter: brightness(0.7);
     transform-origin: right;
     transform: skewY(45deg);
-    transition: 0.5s;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
     border-top: 2px solid rgba(255,255,255,0.1);
+    will-change: background, box-shadow;
+    backface-visibility: hidden;
 }
 ul li:hover::before
 {
     background: var(--clr);
-    filter: brightness(0.7) saturate(1.5);
-    box-shadow: 0 0 20px var(--clr);
+    filter: brightness(0.7);
+    box-shadow: 0 0 15px var(--clr);
 }
 ul li::after
 {
@@ -99,17 +105,18 @@ ul li::after
     width: 100%;
     height: 40px;
     background: linear-gradient(145deg, #5a5b62, #3a3b42);
-    filter: brightness(0.9);
     transform-origin: bottom;
     transform: skewX(45deg);
-    transition: 0.5s;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
     border-right: 2px solid rgba(255,255,255,0.1);
+    will-change: background, box-shadow;
+    backface-visibility: hidden;
 }
 ul li:hover::after
 {
     background: var(--clr);
-    filter: brightness(0.9) saturate(1.5);
-    box-shadow: 0 0 20px var(--clr);
+    filter: brightness(0.9);
+    box-shadow: 0 0 15px var(--clr);
 }
 ul li a
 {
@@ -118,15 +125,15 @@ ul li a
     display: block;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    transition: 0.5s;
+    transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
     font-weight: 600;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    will-change: transform, color;
 }
 ul li:hover a
 {
     color: #fff;
     text-shadow: 0 0 10px rgba(255,255,255,0.8),
-                 0 0 20px rgba(255,255,255,0.6),
                  2px 2px 4px rgba(0,0,0,0.7);
     transform: translateX(5px);
 }
@@ -143,23 +150,24 @@ ul li span
     height: 100%;
     transform-origin: right;
     transform: skewY(45deg);
-    transition: 0.5s;
+    transition: opacity 0.3s ease, transform 0.3s ease;
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0.6;
     font-size: 1.4em;
     filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
+    will-change: transform, opacity;
+    backface-visibility: hidden;
 }
 ul li:hover span
 {
     opacity: 1;
-    filter: drop-shadow(0 0 10px rgba(255,255,255,0.8))
-            drop-shadow(0 0 20px currentColor);
-    animation: iconPulse 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.8));
+    transform: skewY(45deg) scale(1.1);
 }
 
 @keyframes iconPulse {
-    0%, 100% { transform: skewY(45deg) scale(1); }
+    0%, 100% { transform: skewY(45deg) scale(1.1); }
     50% { transform: skewY(45deg) scale(1.15); }
 }
