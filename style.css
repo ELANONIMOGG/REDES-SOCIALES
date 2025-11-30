@@ -12,27 +12,62 @@ body
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: #3e3f46;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    overflow: hidden;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: backgroundMove 20s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes backgroundMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
 }
 ul
 {
     position: relative;
     transform: skewY(-15deg);
+    z-index: 1;
+    filter: drop-shadow(0 25px 50px rgba(0,0,0,0.5));
 }
 ul li
 {
     position: relative;
     list-style: none;
-    width: 120px;
-    background: #3e3f46;
-    padding: 15px;
+    width: 140px;
+    background: linear-gradient(145deg, #4a4b52, #2a2b32);
+    padding: 18px;
     transition: 0.5s;
     z-index: calc(1 * var(--i));
+    border-left: 3px solid rgba(255,255,255,0.1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 ul li:hover
 { 
-    transform: translateX(-50px);
+    transform: translateX(-60px) scale(1.05);
     background: var(--clr);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5), 
+                0 0 30px var(--clr),
+                inset 0 0 20px rgba(255,255,255,0.2);
+    filter: brightness(1.2);
 }
 ul li::before
 {
@@ -42,16 +77,18 @@ ul li::before
     left: -40px;
     width: 40px;
     height: 100%;
-    background: #3e3f46;
+    background: linear-gradient(145deg, #3a3b42, #1a1b22);
     filter: brightness(0.7);
     transform-origin: right;
     transform: skewY(45deg);
     transition: 0.5s;
+    border-top: 2px solid rgba(255,255,255,0.1);
 }
 ul li:hover::before
 {
     background: var(--clr);
-    filter: brightness(0.7);
+    filter: brightness(0.7) saturate(1.5);
+    box-shadow: 0 0 20px var(--clr);
 }
 ul li::after
 {
@@ -61,33 +98,41 @@ ul li::after
     left: 0;
     width: 100%;
     height: 40px;
-    background: #3e3f46;
+    background: linear-gradient(145deg, #5a5b62, #3a3b42);
     filter: brightness(0.9);
     transform-origin: bottom;
     transform: skewX(45deg);
     transition: 0.5s;
+    border-right: 2px solid rgba(255,255,255,0.1);
 }
 ul li:hover::after
 {
     background: var(--clr);
-    filter: brightness(0.9);
+    filter: brightness(0.9) saturate(1.5);
+    box-shadow: 0 0 20px var(--clr);
 }
 ul li a
 {
     text-decoration: none;
-    color: #999;
+    color: #e0e0e0;
     display: block;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    transform: 0.5s;
+    letter-spacing: 0.08em;
+    transition: 0.5s;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 ul li:hover a
 {
     color: #fff;
+    text-shadow: 0 0 10px rgba(255,255,255,0.8),
+                 0 0 20px rgba(255,255,255,0.6),
+                 2px 2px 4px rgba(0,0,0,0.7);
+    transform: translateX(5px);
 }
 ul li:last-child::after
 {
-    box-shadow: .120px 120px 20px rgba(0,0,0,0.25);
+    box-shadow: 0 120px 120px 20px rgba(0,0,0,0.4);
 }
 ul li span
 {
@@ -102,11 +147,19 @@ ul li span
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0.5;
-    font-size: 1.25em;
-
+    opacity: 0.6;
+    font-size: 1.4em;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
 }
 ul li:hover span
 {
     opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.8))
+            drop-shadow(0 0 20px currentColor);
+    animation: iconPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+    0%, 100% { transform: skewY(45deg) scale(1); }
+    50% { transform: skewY(45deg) scale(1.15); }
 }
